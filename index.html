@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📱 TELEFON SOTISH - RASMLAR BILAN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #06b6d4;
+            --primary-dark: #0891b2;
+            --secondary: #8b5cf6;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray: #64748b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* LOGIN SCREEN */
+        .login-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+        }
+        
+        .login-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin: 0 auto 25px;
+        }
+        
+        .login-title {
+            font-size: 32px;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .login-subtitle {
+            color: var(--gray);
+            margin-bottom: 40px;
+        }
+        
+        /* MAIN APP (HIDDEN INITIALLY) */
+        .app-content {
+            display: none;
+        }
+        
+        /* HEADER */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+        
+        .logo-text h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .logo-text p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .logout-btn {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* STATS CARDS */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+        
+        .stat-icon.total { background: rgba(6, 182, 212, 0.2); color: var(--primary); }
+        .stat-icon.sold { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        .stat-icon.available { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+        .stat-icon.profit { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+        .stat-icon.investment { background: rgba(139, 92, 246, 0.2); color: var(--secondary); }
+        
+        .stat-info h3 {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+        }
+        
+        /* TABS */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px;
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        /* TAB CONTENT */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* FORM STYLES */
+        .form-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+        }
+        
+        .form-card h2 {
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--gray);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .form-input, .form-select {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            color: var(--light);
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2);
+        }
+        
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        /* IMAGE UPLOAD */
+        .image-upload-container {
+            position: relative;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .image-upload-container:hover {
+            border-color: var(--primary);
+            background: rgba(6, 182, 212, 0.05);
+        }
+        
+        .image-upload-container i {
+            font-size: 48px;
+            color: var(--gray);
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .image-preview {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .preview-item {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .remove-image {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(239, 68, 68, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* BUTTONS */
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            width: 100%;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(6, 182, 212, 0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+        
+        /* PHONE LIST */
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .search-filter {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .search-box {
+            position: relative;
+            min-width: 250px;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 14px 18px 14px 45px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            color: var(--light);
+        }
+        
+        .filter-select {
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            color: var(--light);
+            min-width: 150px;
+        }
+        
+        /* SOTUV TABLE */
+        .table-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            text-align: left;
+            padding: 15px;
+            color: var(--gray);
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .profit-cell {
+            font-weight: 600;
+        }
+        
+        .profit-positive {
+            color: var(--success);
+        }
+        
+        .profit-negative {
+            color: var(--danger);
+        }
+        
+        /* PHONE GRID */
+        .phone-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        /* SCROLLBAR STYLING */
+        .phone-grid::-webkit-scrollbar,
+        .table-container::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        .phone-grid::-webkit-scrollbar-track,
+        .table-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .phone-grid::-webkit-scrollbar-thumb,
+        .table-container::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        
+        /* PHONE CARD */
+        .phone-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .phone-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .phone-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .badge-sold {
+            background: linear-gradient(90deg, var(--danger), #f97316);
+            color: white;
+        }
+        
+        .badge-available {
+            background: linear-gradient(90deg, var(--success), #10b981);
+            color: white;
+        }
+        
+        .phone-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .phone-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--gray);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .phone-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .phone-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .phone-details {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+        
+        .phone-price {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 10px 0;
+            color: var(--primary);
+        }
+        
+        .phone-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--gray);
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .phone-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .phone-actions button {
+            flex: 1;
+        }
+        
+        /* SOTUV FORM */
+        .sale-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        /* EMPTY STATE */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+            grid-column: 1 / -1;
+        }
+        
+        .empty-state i {
+            font-size: 60px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        .empty-state h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: var(--dark);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .modal-title {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        /* ANIMATIONS */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .user-info {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .search-filter {
+                width: 100%;
+            }
+            
+            .input-row, .sale-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .phone-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .phone-image {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LOGIN SCREEN -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-card">
+            <div class="login-logo">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h1 class="login-title">Telefon Sotish Sistemasi</h1>
+            <p class="login-subtitle">Login qiling yoki yangi hisob yarating</p>
+            
+            <div class="form-group">
+                <input type="text" id="username" class="form-input" placeholder="Foydalanuvchi nomi" value="admin">
+            </div>
+            
+            <div class="form-group">
+                <input type="password" id="password" class="form-input" placeholder="Parol" value="1234">
+            </div>
+            
+            <button class="btn btn-primary" id="loginBtn">
+                <i class="fas fa-sign-in-alt"></i> Tizimga Kirish
+            </button>
+            
+            <p style="margin-top: 20px; color: var(--gray); font-size: 14px;">
+                Demo login: <strong>admin</strong> | Parol: <strong>1234</strong>
+            </p>
+        </div>
+    </div>
+    
+    <!-- MAIN APP -->
+    <div class="container app-content" id="appContent">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>TELEFON SOTISH SISTEMASI</h1>
+                    <p>Rasmlar bilan telefonlar boshqaruvi</p>
+                </div>
+            </div>
+            
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <div>
+                    <div style="font-weight: 600;" id="userName">Admin</div>
+                    <div style="font-size: 13px; color: var(--gray);" id="userRole">Administrator</div>
+                </div>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Chiqish
+                </button>
+            </div>
+        </div>
+        
+        <!-- STATS -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon total">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Jami Telefonlar</h3>
+                    <div class="stat-value" id="totalPhones">0</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon sold">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Sotilganlar</h3>
+                    <div class="stat-value" id="soldPhones">0</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon available">
+                    <i class="fas fa-box-open"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Qolganlar</h3>
+                    <div class="stat-value" id="availablePhones">0</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon profit">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Jami Foyda</h3>
+                    <div class="stat-value" id="totalProfit">$0</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TABS -->
+        <div class="tabs">
+            <button class="tab active" data-tab="add">
+                <i class="fas fa-plus-circle"></i> Telefon Qo'shish
+            </button>
+            <button class="tab" data-tab="manage">
+                <i class="fas fa-list"></i> Telefonlarni Boshqarish
+            </button>
+            <button class="tab" data-tab="sales">
+                <i class="fas fa-history"></i> Sotuvlar Tarixi
+            </button>
+        </div>
+        
+        <!-- TAB 1: ADD PHONE -->
+        <div class="tab-content active" id="addTab">
+            <div class="form-card">
+                <h2><i class="fas fa-plus-circle"></i> Yangi Telefon Qo'shish</h2>
+                
+                <div class="form-group">
+                    <label for="model">Telefon Modeli *</label>
+                    <input type="text" id="model" class="form-input" placeholder="iPhone 14 Pro, Samsung S23 Ultra...">
+                </div>
+                
+                <div class="input-row">
+                    <div class="form-group">
+                        <label for="color">Rangi *</label>
+                        <input type="text" id="color" class="form-input" placeholder="Qora, Oq, Kumush...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="storage">Xotirasi (GB) *</label>
+                        <input type="text" id="storage" class="form-input" placeholder="128GB, 256GB...">
+                    </div>
+                </div>
+                
+                <div class="input-row">
+                    <div class="form-group">
+                        <label for="imei">IMEI Raqami</label>
+                        <input type="text" id="imei" class="form-input" placeholder="123456789012345">
+                        <div style="font-size: 12px; color: var(--gray); margin-top: 5px;">
+                            Oxirgi 4 raqam: <span id="last4Display">----</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="condition">Holati *</label>
+                        <select id="condition" class="form-select">
+                            <option value="yangi">Yangi</option>
+                            <option value="ishlatilgan" selected>Ishlatilgan</option>
+                            <option value="tamirlangan">Tamirlangan</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="input-row">
+                    <div class="form-group">
+                        <label for="purchasePrice">Kirim Narxi ($) *</label>
+                        <input type="number" id="purchasePrice" class="form-input" placeholder="500">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="salePrice">Sotuv Narxi ($) *</label>
+                        <input type="number" id="salePrice" class="form-input" placeholder="650">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="status">Sotuv Holati *</label>
+                    <select id="status" class="form-select">
+                        <option value="available" selected>Omorda</option>
+                        <option value="sold">Sotilgan</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="imageUpload">Rasm yuklash (ixtiyoriy)</label>
+                    <div class="image-upload-container" id="imageUploadContainer">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Rasmni bu yerga torting yoki <span style="color: var(--primary);">tanlash uchun bosing</span></p>
+                        <p style="font-size: 12px; color: var(--gray); margin-top: 5px;">
+                            PNG, JPG yoki WEBP formatlari qo'llaniladi
+                        </p>
+                        <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                        <div class="image-preview" id="imagePreview"></div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" id="addPhoneBtn">
+                    <i class="fas fa-save"></i> Telefonni Saqlash
+                </button>
+                
+                <div style="margin-top: 15px; text-align: center;">
+                    <div id="profitPreview" style="font-size: 14px; color: var(--gray);">
+                        Foyda: <span style="color: var(--success); font-weight: 600;">$0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TAB 2: MANAGE PHONES -->
+        <div class="tab-content" id="manageTab">
+            <div class="phones-container">
+                <div class="list-header">
+                    <h2 style="font-size: 22px;"><i class="fas fa-list"></i> Telefonlar Ro'yxati</h2>
+                    
+                    <div class="search-filter">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="Model, rang, GB bo'yicha qidirish...">
+                        </div>
+                        
+                        <select id="filterSelect" class="filter-select">
+                            <option value="all">Barchasi</option>
+                            <option value="available">Omorda</option>
+                            <option value="sold">Sotilgan</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="phone-grid" id="phoneGrid">
+                    <!-- Telefonlar shu yerda ko'rinadi -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- TAB 3: SALES HISTORY -->
+        <div class="tab-content" id="salesTab">
+            <div class="table-container">
+                <div class="list-header">
+                    <h2 style="font-size: 22px;"><i class="fas fa-history"></i> Sotuvlar Tarixi</h2>
+                    
+                    <div class="search-filter">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="salesSearch" placeholder="Model yoki IMEI bo'yicha qidirish...">
+                        </div>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Telefon</th>
+                            <th>Xususiyatlari</th>
+                            <th>Sotuv Sanasi</th>
+                            <th>Kirim Narxi</th>
+                            <th>Sotuv Narxi</th>
+                            <th>Foyda</th>
+                        </tr>
+                    </thead>
+                    <tbody id="salesTable">
+                        <!-- Sotuvlar shu yerda ko'rinadi -->
+                    </tbody>
+                </table>
+                
+                <div id="salesEmpty" class="empty-state" style="display: none;">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Sotuvlar topilmadi</h3>
+                    <p>Hozircha sotuvlar mavjud emas</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FOOTER -->
+        <div class="footer">
+            <p>© 2024 Telefon Sotish Sistemsi. Barcha ma'lumotlar brauzeringizda saqlanadi.</p>
+            <p style="margin-top: 5px;">Jami telefonlar: <span id="totalCount">0</span> | Sotilgan: <span id="soldCount">0</span> | Foyda: <span id="profitCount">$0</span></p>
+        </div>
+    </div>
+    
+    <!-- EDIT MODAL -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModalBtn">&times;</button>
+            <h2 class="modal-title"><i class="fas fa-edit"></i> Telefonni Tahrirlash</h2>
+            
+            <div class="form-group">
+                <label for="editModel">Telefon Modeli</label>
+                <input type="text" id="editModel" class="form-input">
+            </div>
+            
+            <div class="input-row">
+                <div class="form-group">
+                    <label for="editColor">Rangi</label>
+                    <input type="text" id="editColor" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editStorage">Xotirasi (GB)</label>
+                    <input type="text" id="editStorage" class="form-input">
+                </div>
+            </div>
+            
+            <div class="input-row">
+                <div class="form-group">
+                    <label for="editImei">IMEI Raqami</label>
+                    <input type="text" id="editImei" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editCondition">Holati</label>
+                    <select id="editCondition" class="form-select">
+                        <option value="yangi">Yangi</option>
+                        <option value="ishlatilgan">Ishlatilgan</option>
+                        <option value="tamirlangan">Tamirlangan</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="input-row">
+                <div class="form-group">
+                    <label for="editPurchasePrice">Kirim Narxi ($)</label>
+                    <input type="number" id="editPurchasePrice" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editSalePrice">Sotuv Narxi ($)</label>
+                    <input type="number" id="editSalePrice" class="form-input">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="editStatus">Sotuv Holati</label>
+                <select id="editStatus" class="form-select">
+                    <option value="available">Omorda</option>
+                    <option value="sold">Sotilgan</option>
+                </select>
+            </div>
+            
+            <button class="btn btn-primary" id="saveEditBtn">
+                <i class="fas fa-check"></i> O'zgartirishlarni Saqlash
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ==================== APP STATE ====================
+        let currentUser = null;
+        let phones = JSON.parse(localStorage.getItem('phonesData')) || [];
+        let sales = JSON.parse(localStorage.getItem('salesData')) || [];
+        let users = JSON.parse(localStorage.getItem('usersData')) || [
+            { username: 'admin', password: '1234', name: 'Admin', role: 'Administrator' }
+        ];
+        let editPhoneId = null;
+        let selectedImages = [];
+        
+        // ==================== DOM ELEMENTS ====================
+        const loginScreen = document.getElementById('loginScreen');
+        const appContent = document.getElementById('appContent');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const userName = document.getElementById('userName');
+        const userRole = document.getElementById('userRole');
+        const userAvatar = document.getElementById('userAvatar');
+        
+        // Tabs
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        // Phone list
+        const phoneGrid = document.getElementById('phoneGrid');
+        const searchInput = document.getElementById('searchInput');
+        const filterSelect = document.getElementById('filterSelect');
+        
+        // Stats elements
+        const totalPhonesEl = document.getElementById('totalPhones');
+        const soldPhonesEl = document.getElementById('soldPhones');
+        const availablePhonesEl = document.getElementById('availablePhones');
+        const totalProfitEl = document.getElementById('totalProfit');
+        const totalCountEl = document.getElementById('totalCount');
+        const soldCountEl = document.getElementById('soldCount');
+        const profitCountEl = document.getElementById('profitCount');
+        
+        // Sales table
+        const salesTable = document.getElementById('salesTable');
+        const salesSearch = document.getElementById('salesSearch');
+        const salesEmpty = document.getElementById('salesEmpty');
+        
+        // Form elements
+        const modelInput = document.getElementById('model');
+        const colorInput = document.getElementById('color');
+        const storageInput = document.getElementById('storage');
+        const imeiInput = document.getElementById('imei');
+        const last4Display = document.getElementById('last4Display');
+        const purchasePriceInput = document.getElementById('purchasePrice');
+        const salePriceInput = document.getElementById('salePrice');
+        const conditionSelect = document.getElementById('condition');
+        const statusSelect = document.getElementById('status');
+        const addPhoneBtn = document.getElementById('addPhoneBtn');
+        const profitPreview = document.getElementById('profitPreview');
+        const imageUpload = document.getElementById('imageUpload');
+        const imageUploadContainer = document.getElementById('imageUploadContainer');
+        const imagePreview = document.getElementById('imagePreview');
+        
+        // Modal elements
+        const editModal = document.getElementById('editModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const editModelInput = document.getElementById('editModel');
+        const editColorInput = document.getElementById('editColor');
+        const editStorageInput = document.getElementById('editStorage');
+        const editImeiInput = document.getElementById('editImei');
+        const editPurchasePriceInput = document.getElementById('editPurchasePrice');
+        const editSalePriceInput = document.getElementById('editSalePrice');
+        const editConditionSelect = document.getElementById('editCondition');
+        const editStatusSelect = document.getElementById('editStatus');
+        const saveEditBtn = document.getElementById('saveEditBtn');
+        
+        // ==================== INITIALIZE APP ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showApp();
+            }
+            
+            attachEventListeners();
+            setupImageUpload();
+            setupProfitPreview();
+        });
+        
+        // ==================== UTILITY FUNCTIONS ====================
+        function showNotification(message, type = 'info') {
+            // Remove existing notification
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) existingNotification.remove();
+            
+            // Create notification
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 25px;
+                border-radius: 12px;
+                color: white;
+                font-weight: 500;
+                z-index: 10000;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+                animation: slideIn 0.3s ease;
+            `;
+            
+            // Set background color based on type
+            if (type === 'success') {
+                notification.style.background = 'rgba(16, 185, 129, 0.9)';
+            } else if (type === 'error') {
+                notification.style.background = 'rgba(239, 68, 68, 0.9)';
+            } else if (type === 'warning') {
+                notification.style.background = 'rgba(245, 158, 11, 0.9)';
+            } else {
+                notification.style.background = 'rgba(6, 182, 212, 0.9)';
+            }
+            
+            // Add icon based on type
+            const icon = type === 'success' ? 'fas fa-check-circle' : 
+                        type === 'error' ? 'fas fa-exclamation-circle' : 
+                        type === 'warning' ? 'fas fa-exclamation-triangle' : 
+                        'fas fa-info-circle';
+            
+            notification.innerHTML = `<i class="${icon}" style="margin-right: 10px;"></i>${message}`;
+            
+            document.body.appendChild(notification);
+            
+            // Add animation styles if not exists
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function getRandomGradient() {
+            const gradients = [
+                'linear-gradient(135deg, #06b6d4, #8b5cf6)',
+                'linear-gradient(135deg, #8b5cf6, #06b6d4)',
+                'linear-gradient(135deg, #10b981, #06b6d4)',
+                'linear-gradient(135deg, #f59e0b, #8b5cf6)'
+            ];
+            return gradients[Math.floor(Math.random() * gradients.length)];
+        }
+        
+        function getConditionText(condition) {
+            switch(condition) {
+                case 'yangi': return 'Yangi';
+                case 'ishlatilgan': return 'Ishlatilgan';
+                case 'tamirlangan': return 'Tamirlangan';
+                default: return condition;
+            }
+        }
+        
+        // ==================== EVENT LISTENERS ====================
+        function attachEventListeners() {
+            // Login
+            loginBtn.addEventListener('click', login);
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') login();
+            });
+            
+            // Logout
+            logoutBtn.addEventListener('click', logout);
+            
+            // Tabs
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    switchTab(tabId);
+                });
+            });
+            
+            // Add phone
+            addPhoneBtn.addEventListener('click', addPhone);
+            
+            // IMEI auto-fill last 4
+            imeiInput.addEventListener('input', updateLast4);
+            
+            // Search and filter
+            searchInput.addEventListener('input', renderPhones);
+            filterSelect.addEventListener('change', renderPhones);
+            salesSearch.addEventListener('input', renderSales);
+            
+            // Modal
+            closeModalBtn.addEventListener('click', () => editModal.style.display = 'none');
+            saveEditBtn.addEventListener('click', saveEdit);
+            
+            // Close modal on background click
+            editModal.addEventListener('click', function(e) {
+                if (e.target === editModal) editModal.style.display = 'none';
+            });
+        }
+        
+        function setupImageUpload() {
+            // Click on container to trigger file input
+            imageUploadContainer.addEventListener('click', () => {
+                imageUpload.click();
+            });
+            
+            // Handle file selection
+            imageUpload.addEventListener('change', handleImageUpload);
+        }
+        
+        function setupProfitPreview() {
+            purchasePriceInput.addEventListener('input', updateProfitPreview);
+            salePriceInput.addEventListener('input', updateProfitPreview);
+            updateProfitPreview();
+        }
+        
+        function updateProfitPreview() {
+            const purchasePrice = parseFloat(purchasePriceInput.value) || 0;
+            const salePrice = parseFloat(salePriceInput.value) || 0;
+            const profit = salePrice - purchasePrice;
+            
+            const profitEl = profitPreview.querySelector('span');
+            if (profitEl) {
+                profitEl.textContent = `$${profit.toFixed(2)}`;
+                profitEl.style.color = profit >= 0 ? '#10b981' : '#ef4444';
+            }
+        }
+        
+        function updateLast4() {
+            const imei = imeiInput.value.replace(/\D/g, '');
+            if (imei.length >= 4) {
+                last4Display.textContent = imei.slice(-4);
+            } else {
+                last4Display.textContent = '----';
+            }
+        }
+        
+        // ==================== IMAGE UPLOAD FUNCTIONS ====================
+        function handleImageUpload(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
+            
+            // Clear previous selection
+            selectedImages = [];
+            imagePreview.innerHTML = '';
+            
+            // Process each file
+            for (let i = 0; i < Math.min(files.length, 3); i++) {
+                const file = files[i];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const imageData = e.target.result;
+                    selectedImages.push(imageData);
+                    renderImagePreview(imageData);
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function renderImagePreview(imageData) {
+            const previewItem = document.createElement('div');
+            previewItem.className = 'preview-item';
+            
+            previewItem.innerHTML = `
+                <img src="${imageData}" alt="Rasm">
+                <button class="remove-image" onclick="removeImage('${imageData}')">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            imagePreview.appendChild(previewItem);
+        }
+        
+        window.removeImage = function(imageData) {
+            selectedImages = selectedImages.filter(img => img !== imageData);
+            renderAllImagePreviews();
+        }
+        
+        function renderAllImagePreviews() {
+            imagePreview.innerHTML = '';
+            selectedImages.forEach(imageData => {
+                renderImagePreview(imageData);
+            });
+        }
+        
+        // ==================== AUTH FUNCTIONS ====================
+        function login() {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            if (!username || !password) {
+                showNotification('Iltimos, login va parolni kiriting!', 'error');
+                return;
+            }
+            
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                showApp();
+                showNotification('Xush kelibsiz, ' + user.name + '!', 'success');
+            } else {
+                showNotification('Notogri login yoki parol!', 'error');
+            }
+        }
+        
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            showLogin();
+            showNotification('Tizimdan chiqdingiz', 'info');
+        }
+        
+        // ==================== SHOW/HIDE SCREENS ====================
+        function showApp() {
+            loginScreen.style.display = 'none';
+            appContent.style.display = 'block';
+            
+            // Update user info
+            userName.textContent = currentUser.name;
+            userRole.textContent = currentUser.role;
+            userAvatar.textContent = currentUser.name.charAt(0).toUpperCase();
+            userAvatar.style.background = getRandomGradient();
+            
+            // Load data
+            renderPhones();
+            renderSales();
+            updateStats();
+        }
+        
+        function showLogin() {
+            loginScreen.style.display = 'flex';
+            appContent.style.display = 'none';
+            usernameInput.value = '';
+            passwordInput.value = '';
+            usernameInput.focus();
+        }
+        
+        // ==================== TAB FUNCTIONS ====================
+        function switchTab(tabId) {
+            // Update active tab
+            tabs.forEach(tab => {
+                tab.classList.toggle('active', tab.getAttribute('data-tab') === tabId);
+            });
+            
+            // Show active content
+            tabContents.forEach(content => {
+                content.classList.toggle('active', content.id === tabId + 'Tab');
+            });
+            
+            // Refresh data if needed
+            if (tabId === 'sales') {
+                renderSales();
+            }
+        }
+        
+        // ==================== PHONE FUNCTIONS ====================
+        function addPhone() {
+            const model = modelInput.value.trim();
+            const color = colorInput.value.trim();
+            const storage = storageInput.value.trim();
+            const imei = imeiInput.value.replace(/\D/g, '');
+            const purchasePrice = parseFloat(purchasePriceInput.value);
+            const salePrice = parseFloat(salePriceInput.value);
+            const condition = conditionSelect.value;
+            const status = statusSelect.value;
+            
+            // Validation
+            if (!model) {
+                showNotification('Iltimos, telefon modelini kiriting!', 'error');
+                modelInput.focus();
+                return;
+            }
+            
+            if (!color) {
+                showNotification('Iltimos, telefon rangini kiriting!', 'error');
+                colorInput.focus();
+                return;
+            }
+            
+            if (!storage) {
+                showNotification('Iltimos, telefon xotirasini kiriting!', 'error');
+                storageInput.focus();
+                return;
+            }
+            
+            if (isNaN(purchasePrice) || purchasePrice <= 0) {
+                showNotification('Iltimos, togri kirim narxini kiriting!', 'error');
+                purchasePriceInput.focus();
+                return;
+            }
+            
+            if (isNaN(salePrice) || salePrice <= 0) {
+                showNotification('Iltimos, togri sotuv narxini kiriting!', 'error');
+                salePriceInput.focus();
+                return;
+            }
+            
+            if (salePrice < purchasePrice) {
+                const confirmSale = confirm('Sotuv narxi kirim narxidan past. Davom etishni xohlaysizmi?');
+                if (!confirmSale) return;
+            }
+            
+            // Create phone object
+            const newPhone = {
+                id: Date.now(),
+                model: model,
+                color: color,
+                storage: storage,
+                imei: imei,
+                last4: imei.slice(-4),
+                purchasePrice: purchasePrice,
+                salePrice: salePrice,
+                condition: condition,
+                conditionText: getConditionText(condition),
+                status: status,
+                images: selectedImages,
+                addedDate: new Date().toLocaleDateString('uz-UZ'),
+                addedTime: new Date().toLocaleTimeString('uz-UZ'),
+                addedBy: currentUser.name,
+                profit: salePrice - purchasePrice
+            };
+            
+            // Add to array
+            phones.unshift(newPhone);
+            saveToLocalStorage();
+            renderPhones();
+            updateStats();
+            
+            // If status is sold, add to sales history
+            if (status === 'sold') {
+                const saleRecord = {
+                    id: Date.now(),
+                    phoneId: newPhone.id,
+                    model: model,
+                    specs: `${color}, ${storage}`,
+                    imei: imei,
+                    last4: imei.slice(-4),
+                    purchasePrice: purchasePrice,
+                    salePrice: salePrice,
+                    profit: salePrice - purchasePrice,
+                    saleDate: new Date().toLocaleDateString('uz-UZ'),
+                    saleTime: new Date().toLocaleTimeString('uz-UZ'),
+                    soldBy: currentUser.name
+                };
+                sales.unshift(saleRecord);
+                localStorage.setItem('salesData', JSON.stringify(sales));
+                renderSales();
+            }
+            
+            // Reset form
+            modelInput.value = '';
+            colorInput.value = '';
+            storageInput.value = '';
+            imeiInput.value = '';
+            purchasePriceInput.value = '';
+            salePriceInput.value = '';
+            last4Display.textContent = '----';
+            profitPreview.querySelector('span').textContent = '$0';
+            profitPreview.querySelector('span').style.color = '#10b981';
+            
+            // Clear images
+            selectedImages = [];
+            imagePreview.innerHTML = '';
+            imageUpload.value = '';
+            
+            // Show success message
+            showNotification('Telefon muvaffaqiyatli qoshildi!', 'success');
+        
+        }
+        // RENDER PHONES
+        function renderPhones() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filter = filterSelect.value;
+            
+            // Filter phones
+            let filteredPhones = phones.filter(phone => {
+                const matchesSearch = phone.model.toLowerCase().includes(searchTerm) || 
+                                     phone.color.toLowerCase().includes(searchTerm) ||
+                                     phone.storage.toLowerCase().includes(searchTerm) ||
+                                     phone.imei.includes(searchTerm);
+                
+                let matchesFilter = true;
+                if (filter === 'available') {
+                    matchesFilter = phone.status === 'available';
+                } else if (filter === 'sold') {
+                    matchesFilter = phone.status === 'sold';
+                }
+                
+                return matchesSearch && matchesFilter && phone.addedBy === currentUser.name;
+            });
+            
+            // Sort phones (newest first)
+            filteredPhones.sort((a, b) => b.id - a.id);
+            
+            // Render
+            phoneGrid.innerHTML = '';
+            
+            if (filteredPhones.length === 0) {
+                phoneGrid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Telefonlar topilmadi</h3>
+                        <p>Hozircha telefonlaringiz yo'q. Yangi telefon qo'shing.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            filteredPhones.forEach(phone => {
+                const phoneCard = document.createElement('div');
+                phoneCard.className = 'phone-card fade-in';
+                
+                // Determine badge class based on status
+                let badgeClass = 'badge-available';
+                let badgeText = 'Omorda';
+                
+                if (phone.status === 'sold') {
+                    badgeClass = 'badge-sold';
+                    badgeText = 'Sotildi';
+                }
+                
+                const profit = phone.salePrice - phone.purchasePrice;
+                const profitText = profit >= 0 ? `+$${profit.toFixed(2)}` : `-$${Math.abs(profit).toFixed(2)}`;
+                
+                // Get first image or use default icon
+                const firstImage = phone.images && phone.images.length > 0 ? phone.images[0] : null;
+                
+                phoneCard.innerHTML = `
+                    <div class="phone-badge ${badgeClass}">
+                        ${badgeText}
+                    </div>
+                    
+                    <div class="phone-header">
+                        <div class="phone-image">
+                            ${firstImage ? `<img src="${firstImage}" alt="${escapeHtml(phone.model)}">` : `<i class="fas fa-mobile-alt"></i>`}
+                        </div>
+                        <div>
+                            <h3>${escapeHtml(phone.model)}</h3>
+                            <div class="phone-details">
+                                Rang: <strong>${escapeHtml(phone.color)}</strong> | Xotira: <strong>${escapeHtml(phone.storage)}</strong>
+                            </div>
+                            <div class="phone-details">
+                                IMEI: ${phone.imei || '---'} | Oxirgi 4: <strong>${phone.last4 || '----'}</strong>
+                            </div>
+                            <div class="phone-details">
+                                Holat: ${escapeHtml(phone.conditionText)}
+                            </div>
+                            ${phone.images && phone.images.length > 1 ? `<div class="phone-details" style="color: var(--primary);"><i class="fas fa-images"></i> +${phone.images.length - 1} rasm</div>` : ''}
+                        </div>
+                    </div>
+                    
+                    <div class="phone-price">$${phone.salePrice.toFixed(2)}</div>
+                    
+                    <div class="phone-meta">
+                        <div>Kirim: $${phone.purchasePrice.toFixed(2)}</div>
+                        <div style="color: ${profit >= 0 ? '#10b981' : '#ef4444'}">
+                            ${profitText}
+                        </div>
+                    </div>
+                    
+                    <div class="phone-actions">
+                        <button class="btn btn-secondary btn-small" onclick="togglePhoneStatus(${phone.id})">
+                            <i class="fas fa-exchange-alt"></i> ${phone.status === 'sold' ? 'Omorda' : 'Sotildi'}
+                        </button>
+                        <button class="btn btn-secondary btn-small" onclick="openEditModal(${phone.id})">
+                            <i class="fas fa-edit"></i> Tahrirlash
+                        </button>
+                        <button class="btn btn-secondary btn-small" onclick="deletePhone(${phone.id})" style="background: rgba(239, 68, 68, 0.2); color: #ef4444;">
+                            <i class="fas fa-trash"></i> O'chirish
+                        </button>
+                    </div>
+                `;
+                
+                phoneGrid.appendChild(phoneCard);
+            });
+        }
+        
+        // RENDER SALES
+        function renderSales() {
+            const searchTerm = salesSearch.value.toLowerCase();
+            
+            // Filter sales
+            let filteredSales = sales.filter(sale => {
+                const matchesSearch = sale.model.toLowerCase().includes(searchTerm) || 
+                                     sale.imei.includes(searchTerm);
+                
+                return matchesSearch;
+            });
+            
+            // Render table
+            salesTable.innerHTML = '';
+            
+            if (filteredSales.length === 0) {
+                salesEmpty.style.display = 'block';
+                return;
+            }
+            
+            salesEmpty.style.display = 'none';
+            
+            filteredSales.forEach((sale, index) => {
+                const profit = sale.salePrice - sale.purchasePrice;
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td><strong>${escapeHtml(sale.model)}</strong></td>
+                    <td>${escapeHtml(sale.specs)}<br><small>IMEI: ${sale.imei || '---'}</small></td>
+                    <td>${sale.saleDate}<br><small>${sale.saleTime}</small></td>
+                    <td>$${sale.purchasePrice.toFixed(2)}</td>
+                    <td><strong>$${sale.salePrice.toFixed(2)}</strong></td>
+                    <td class="profit-cell ${profit >= 0 ? 'profit-positive' : 'profit-negative'}">
+                        ${profit >= 0 ? '+' : ''}$${profit.toFixed(2)}
+                    </td>
+                `;
+                salesTable.appendChild(row);
+            });
+        }
+        
+        // UPDATE STATS
+        function updateStats() {
+            const userPhones = phones.filter(p => p.addedBy === currentUser.name);
+            const totalPhones = userPhones.length;
+            const soldPhones = userPhones.filter(p => p.status === 'sold').length;
+            const availablePhones = totalPhones - soldPhones;
+            
+            // Calculate total profit (only from sold phones)
+            const totalProfit = userPhones
+                .filter(p => p.status === 'sold')
+                .reduce((sum, phone) => sum + (phone.salePrice - phone.purchasePrice), 0);
+            
+            // Update UI
+            totalPhonesEl.textContent = totalPhones;
+            soldPhonesEl.textContent = soldPhones;
+            availablePhonesEl.textContent = availablePhones;
+            totalProfitEl.textContent = `$${totalProfit.toFixed(2)}`;
+            totalProfitEl.style.color = totalProfit >= 0 ? '#10b981' : '#ef4444';
+            
+            // Update footer
+            totalCountEl.textContent = totalPhones;
+            soldCountEl.textContent = soldPhones;
+            profitCountEl.textContent = `$${totalProfit.toFixed(2)}`;
+        }
+        
+        // TOGGLE PHONE STATUS
+        window.togglePhoneStatus = function(id) {
+            const phoneIndex = phones.findIndex(p => p.id === id);
+            if (phoneIndex === -1) return;
+            
+            const phone = phones[phoneIndex];
+            const newStatus = phone.status === 'sold' ? 'available' : 'sold';
+            const oldStatus = phones[phoneIndex].status;
+            
+            // Update phone status
+            phones[phoneIndex].status = newStatus;
+            
+            // If marking as sold, add to sales history
+            if (newStatus === 'sold' && oldStatus !== 'sold') {
+                const saleRecord = {
+                    id: Date.now(),
+                    phoneId: phone.id,
+                    model: phone.model,
+                    specs: `${phone.color}, ${phone.storage}`,
+                    imei: phone.imei,
+                    last4: phone.last4,
+                    purchasePrice: phone.purchasePrice,
+                    salePrice: phone.salePrice,
+                    profit: phone.salePrice - phone.purchasePrice,
+                    saleDate: new Date().toLocaleDateString('uz-UZ'),
+                    saleTime: new Date().toLocaleTimeString('uz-UZ'),
+                    soldBy: currentUser.name
+                };
+                sales.unshift(saleRecord);
+                localStorage.setItem('salesData', JSON.stringify(sales));
+                renderSales();
+            }
+            
+            // If marking as not sold, remove from sales history
+            if (newStatus !== 'sold' && oldStatus === 'sold') {
+                sales = sales.filter(sale => sale.phoneId !== phone.id);
+                localStorage.setItem('salesData', JSON.stringify(sales));
+                renderSales();
+            }
+            
+            saveToLocalStorage();
+            renderPhones();
+            updateStats();
+            
+            showNotification(`Telefon ${newStatus === 'sold' ? 'sotildi' : 'omborga qaytarildi'}`, 'success');
+        }
+        
+        // OPEN EDIT MODAL
+        window.openEditModal = function(id) {
+            const phone = phones.find(p => p.id === id);
+            if (!phone) return;
+            
+            editPhoneId = id;
+            editModelInput.value = phone.model;
+            editColorInput.value = phone.color;
+            editStorageInput.value = phone.storage;
+            editImeiInput.value = phone.imei;
+            editPurchasePriceInput.value = phone.purchasePrice;
+            editSalePriceInput.value = phone.salePrice;
+            editConditionSelect.value = phone.condition;
+            editStatusSelect.value = phone.status;
+            
+            editModal.style.display = 'flex';
+        }
+        
+        // SAVE EDIT
+        function saveEdit() {
+            if (!editPhoneId) return;
+            
+            const phoneIndex = phones.findIndex(p => p.id === editPhoneId);
+            if (phoneIndex === -1) return;
+            
+            const oldStatus = phones[phoneIndex].status;
+            
+            // Update phone
+            phones[phoneIndex].model = editModelInput.value.trim();
+            phones[phoneIndex].color = editColorInput.value.trim();
+            phones[phoneIndex].storage = editStorageInput.value.trim();
+            phones[phoneIndex].imei = editImeiInput.value.replace(/\D/g, '');
+            phones[phoneIndex].last4 = phones[phoneIndex].imei.slice(-4);
+            phones[phoneIndex].purchasePrice = parseFloat(editPurchasePriceInput.value);
+            phones[phoneIndex].salePrice = parseFloat(editSalePriceInput.value);
+            phones[phoneIndex].condition = editConditionSelect.value;
+            phones[phoneIndex].conditionText = getConditionText(editConditionSelect.value);
+            phones[phoneIndex].status = editStatusSelect.value;
+            phones[phoneIndex].profit = phones[phoneIndex].salePrice - phones[phoneIndex].purchasePrice;
+            
+            // If status changed to sold, add to sales
+            if (editStatusSelect.value === 'sold' && oldStatus !== 'sold') {
+                const saleRecord = {
+                    id: Date.now(),
+                    phoneId: editPhoneId,
+                    model: editModelInput.value.trim(),
+                    specs: `${editColorInput.value.trim()}, ${editStorageInput.value.trim()}`,
+                    imei: editImeiInput.value.replace(/\D/g, ''),
+                    last4: phones[phoneIndex].imei.slice(-4),
+                    purchasePrice: parseFloat(editPurchasePriceInput.value),
+                    salePrice: parseFloat(editSalePriceInput.value),
+                    profit: parseFloat(editSalePriceInput.value) - parseFloat(editPurchasePriceInput.value),
+                    saleDate: new Date().toLocaleDateString('uz-UZ'),
+                    saleTime: new Date().toLocaleTimeString('uz-UZ'),
+                    soldBy: currentUser.name
+                };
+                sales.unshift(saleRecord);
+            }
+            
+            // If status changed from sold to not sold, remove from sales
+            if (editStatusSelect.value !== 'sold' && oldStatus === 'sold') {
+                sales = sales.filter(sale => sale.phoneId !== editPhoneId);
+            }
+            
+            // If status is sold and phone info changed, update sales record
+            if (editStatusSelect.value === 'sold') {
+                const saleIndex = sales.findIndex(sale => sale.phoneId === editPhoneId);
+                if (saleIndex !== -1) {
+                    sales[saleIndex].model = editModelInput.value.trim();
+                    sales[saleIndex].specs = `${editColorInput.value.trim()}, ${editStorageInput.value.trim()}`;
+                    sales[saleIndex].imei = editImeiInput.value.replace(/\D/g, '');
+                    sales[saleIndex].last4 = phones[phoneIndex].imei.slice(-4);
+                    sales[saleIndex].purchasePrice = parseFloat(editPurchasePriceInput.value);
+                    sales[saleIndex].salePrice = parseFloat(editSalePriceInput.value);
+                    sales[saleIndex].profit = parseFloat(editSalePriceInput.value) - parseFloat(editPurchasePriceInput.value);
+                }
+            }
+            
+            saveToLocalStorage();
+            localStorage.setItem('salesData', JSON.stringify(sales));
+            renderPhones();
+            renderSales();
+            updateStats();
+            
+            editModal.style.display = 'none';
+            editPhoneId = null;
+            
+            showNotification('Telefon ma\'lumotlari yangilandi', 'success');
+        }
+        
+        // DELETE PHONE
+        window.deletePhone = function(id) {
+            if (!confirm('Bu telefoni rostdan ham o\'chirmoqchimisiz?')) return;
+            
+            // Remove from phones
+            phones = phones.filter(p => p.id !== id);
+            
+            // Remove from sales if exists
+            sales = sales.filter(sale => sale.phoneId !== id);
+            
+            saveToLocalStorage();
+            localStorage.setItem('salesData', JSON.stringify(sales));
+            renderPhones();
+            renderSales();
+            updateStats();
+            
+            showNotification('Telefon o\'chirildi', 'success');
+        }
+        
+        // SAVE TO LOCAL STORAGE
+        function saveToLocalStorage() {
+            localStorage.setItem('phonesData', JSON.stringify(phones));
+        }
+    </script>
+</body>
+</html>
