@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📱 TELEFON SOTISH - RASMLAR BILAN</title>
+    <title>📱 TELEFON SOTISH - HISOBOTLAR VA INVESTITSIYA</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -635,12 +635,49 @@
             flex: 1;
         }
         
-        /* SOTUV FORM */
-        .sale-form {
+        /* REPORTS SECTION */
+        .reports-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
+        }
+        
+        .report-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+        }
+        
+        .report-card h3 {
+            font-size: 16px;
+            color: var(--gray);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .report-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .report-subtitle {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
         }
         
         /* EMPTY STATE */
@@ -739,7 +776,7 @@
                 width: 100%;
             }
             
-            .input-row, .sale-form {
+            .input-row {
                 grid-template-columns: 1fr;
             }
             
@@ -751,9 +788,8 @@
                 flex-direction: column;
             }
             
-            .phone-image {
-                width: 80px;
-                height: 80px;
+            .reports-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -796,7 +832,7 @@
                 </div>
                 <div class="logo-text">
                     <h1>TELEFON SOTISH SISTEMASI</h1>
-                    <p>Rasmlar bilan telefonlar boshqaruvi</p>
+                    <p>Investitsiya, foyda va to'liq hisobotlar</p>
                 </div>
             </div>
             
@@ -835,12 +871,12 @@
             </div>
             
             <div class="stat-card">
-                <div class="stat-icon available">
-                    <i class="fas fa-box-open"></i>
+                <div class="stat-icon investment">
+                    <i class="fas fa-money-bill-wave"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>Qolganlar</h3>
-                    <div class="stat-value" id="availablePhones">0</div>
+                    <h3>Jami Investitsiya</h3>
+                    <div class="stat-value" id="totalInvestment">$0</div>
                 </div>
             </div>
             
@@ -865,6 +901,9 @@
             </button>
             <button class="tab" data-tab="sales">
                 <i class="fas fa-history"></i> Sotuvlar Tarixi
+            </button>
+            <button class="tab" data-tab="reports">
+                <i class="fas fa-chart-bar"></i> Hisobotlar
             </button>
         </div>
         
@@ -911,12 +950,12 @@
                 
                 <div class="input-row">
                     <div class="form-group">
-                        <label for="purchasePrice">Kirim Narxi ($) *</label>
+                        <label for="purchasePrice">Kirim Narxi (Investitsiya) *</label>
                         <input type="number" id="purchasePrice" class="form-input" placeholder="500">
                     </div>
                     
                     <div class="form-group">
-                        <label for="salePrice">Sotuv Narxi ($) *</label>
+                        <label for="salePrice">Sotuv Narxi *</label>
                         <input type="number" id="salePrice" class="form-input" placeholder="650">
                     </div>
                 </div>
@@ -1001,7 +1040,7 @@
                             <th>Telefon</th>
                             <th>Xususiyatlari</th>
                             <th>Sotuv Sanasi</th>
-                            <th>Kirim Narxi</th>
+                            <th>Investitsiya</th>
                             <th>Sotuv Narxi</th>
                             <th>Foyda</th>
                         </tr>
@@ -1015,6 +1054,104 @@
                     <i class="fas fa-shopping-cart"></i>
                     <h3>Sotuvlar topilmadi</h3>
                     <p>Hozircha sotuvlar mavjud emas</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TAB 4: REPORTS -->
+        <div class="tab-content" id="reportsTab">
+            <div class="form-card">
+                <h2><i class="fas fa-chart-bar"></i> Hisobotlar</h2>
+                
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <h3><i class="fas fa-calendar-day"></i> Bugungi</h3>
+                        <div class="report-value" id="todaySales">0</div>
+                        <div class="report-subtitle">Sotuvlar soni</div>
+                        <div class="report-value" id="todayProfit">$0</div>
+                        <div class="report-subtitle">Bugungi foyda</div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <h3><i class="fas fa-calendar-week"></i> Bu Hafta</h3>
+                        <div class="report-value" id="weekSales">0</div>
+                        <div class="report-subtitle">Sotuvlar soni</div>
+                        <div class="report-value" id="weekProfit">$0</div>
+                        <div class="report-subtitle">Haftalik foyda</div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <h3><i class="fas fa-calendar-month"></i> Bu Oy</h3>
+                        <div class="report-value" id="monthSales">0</div>
+                        <div class="report-subtitle">Sotuvlar soni</div>
+                        <div class="report-value" id="monthProfit">$0</div>
+                        <div class="report-subtitle">Oylik foyda</div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <h3><i class="fas fa-percentage"></i> O'rtacha</h3>
+                        <div class="report-value" id="avgProfitPerPhone">$0</div>
+                        <div class="report-subtitle">Telefon boshiga foyda</div>
+                        <div class="report-value" id="roiPercentage">0%</div>
+                        <div class="report-subtitle">Investitsiyaga qaytish</div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 style="margin-bottom: 20px;"><i class="fas fa-chart-pie"></i> Investitsiya va Foyda Tahlili</h3>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h4 style="color: var(--gray); margin-bottom: 10px;">Investitsiya Tarkibi</h4>
+                            <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span>Jami investitsiya:</span>
+                                    <span id="totalInvestmentReport">$0</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span>Jami daromad:</span>
+                                    <span id="totalRevenue">$0</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span>Jami foyda:</span>
+                                    <span id="totalProfitReport">$0</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span>Foyda darajasi:</span>
+                                    <span id="profitMargin">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: var(--gray); margin-bottom: 10px;">Holat Bo'yicha Statistikalar</h4>
+                            <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span>Omorda telefonlar:</span>
+                                    <span id="availablePhonesReport">0</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span>Sotilgan telefonlar:</span>
+                                    <span id="soldPhonesReport">0</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span>Eng ko'p foyda:</span>
+                                    <span id="maxProfitPhone">$0</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span>Eng past foyda:</span>
+                                    <span id="minProfitPhone">$0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <h4 style="color: var(--gray); margin-bottom: 10px;">Eng Ko'p Sotilgan Modellar</h4>
+                        <div id="topModels" style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px;">
+                            <!-- Top modellar shu yerda -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1067,12 +1204,12 @@
             
             <div class="input-row">
                 <div class="form-group">
-                    <label for="editPurchasePrice">Kirim Narxi ($)</label>
+                    <label for="editPurchasePrice">Kirim Narxi (Investitsiya)</label>
                     <input type="number" id="editPurchasePrice" class="form-input">
                 </div>
                 
                 <div class="form-group">
-                    <label for="editSalePrice">Sotuv Narxi ($)</label>
+                    <label for="editSalePrice">Sotuv Narxi</label>
                     <input type="number" id="editSalePrice" class="form-input">
                 </div>
             </div>
@@ -1125,7 +1262,7 @@
         // Stats elements
         const totalPhonesEl = document.getElementById('totalPhones');
         const soldPhonesEl = document.getElementById('soldPhones');
-        const availablePhonesEl = document.getElementById('availablePhones');
+        const totalInvestmentEl = document.getElementById('totalInvestment');
         const totalProfitEl = document.getElementById('totalProfit');
         const totalCountEl = document.getElementById('totalCount');
         const soldCountEl = document.getElementById('soldCount');
@@ -1135,6 +1272,25 @@
         const salesTable = document.getElementById('salesTable');
         const salesSearch = document.getElementById('salesSearch');
         const salesEmpty = document.getElementById('salesEmpty');
+        
+        // Reports elements
+        const todaySalesEl = document.getElementById('todaySales');
+        const todayProfitEl = document.getElementById('todayProfit');
+        const weekSalesEl = document.getElementById('weekSales');
+        const weekProfitEl = document.getElementById('weekProfit');
+        const monthSalesEl = document.getElementById('monthSales');
+        const monthProfitEl = document.getElementById('monthProfit');
+        const avgProfitPerPhoneEl = document.getElementById('avgProfitPerPhone');
+        const roiPercentageEl = document.getElementById('roiPercentage');
+        const totalInvestmentReportEl = document.getElementById('totalInvestmentReport');
+        const totalRevenueEl = document.getElementById('totalRevenue');
+        const totalProfitReportEl = document.getElementById('totalProfitReport');
+        const profitMarginEl = document.getElementById('profitMargin');
+        const availablePhonesReportEl = document.getElementById('availablePhonesReport');
+        const soldPhonesReportEl = document.getElementById('soldPhonesReport');
+        const maxProfitPhoneEl = document.getElementById('maxProfitPhone');
+        const minProfitPhoneEl = document.getElementById('minProfitPhone');
+        const topModelsEl = document.getElementById('topModels');
         
         // Form elements
         const modelInput = document.getElementById('model');
@@ -1419,7 +1575,7 @@
                 showApp();
                 showNotification('Xush kelibsiz, ' + user.name + '!', 'success');
             } else {
-                showNotification('Notogri login yoki parol!', 'error');
+                showNotification('Noto\'g\'ri login yoki parol!', 'error');
             }
         }
         
@@ -1445,6 +1601,7 @@
             renderPhones();
             renderSales();
             updateStats();
+            updateReports();
         }
         
         function showLogin() {
@@ -1470,6 +1627,8 @@
             // Refresh data if needed
             if (tabId === 'sales') {
                 renderSales();
+            } else if (tabId === 'reports') {
+                updateReports();
             }
         }
         
@@ -1504,19 +1663,19 @@
             }
             
             if (isNaN(purchasePrice) || purchasePrice <= 0) {
-                showNotification('Iltimos, togri kirim narxini kiriting!', 'error');
+                showNotification('Iltimos, to\'g\'ri kirim narxini (investitsiyani) kiriting!', 'error');
                 purchasePriceInput.focus();
                 return;
             }
             
             if (isNaN(salePrice) || salePrice <= 0) {
-                showNotification('Iltimos, togri sotuv narxini kiriting!', 'error');
+                showNotification('Iltimos, to\'g\'ri sotuv narxini kiriting!', 'error');
                 salePriceInput.focus();
                 return;
             }
             
             if (salePrice < purchasePrice) {
-                const confirmSale = confirm('Sotuv narxi kirim narxidan past. Davom etishni xohlaysizmi?');
+                const confirmSale = confirm('Sotuv narxi investitsiyadan past. Davom etishni xohlaysizmi?');
                 if (!confirmSale) return;
             }
             
@@ -1545,6 +1704,7 @@
             saveToLocalStorage();
             renderPhones();
             updateStats();
+            updateReports();
             
             // If status is sold, add to sales history
             if (status === 'sold') {
@@ -1584,9 +1744,9 @@
             imageUpload.value = '';
             
             // Show success message
-            showNotification('Telefon muvaffaqiyatli qoshildi!', 'success');
-        
+            showNotification('Telefon muvaffaqiyatli qo\'shildi!', 'success');
         }
+        
         // RENDER PHONES
         function renderPhones() {
             const searchTerm = searchInput.value.toLowerCase();
@@ -1641,6 +1801,7 @@
                 
                 const profit = phone.salePrice - phone.purchasePrice;
                 const profitText = profit >= 0 ? `+$${profit.toFixed(2)}` : `-$${Math.abs(profit).toFixed(2)}`;
+                const roi = phone.purchasePrice > 0 ? ((profit / phone.purchasePrice) * 100).toFixed(1) : '0';
                 
                 // Get first image or use default icon
                 const firstImage = phone.images && phone.images.length > 0 ? phone.images[0] : null;
@@ -1672,9 +1833,9 @@
                     <div class="phone-price">$${phone.salePrice.toFixed(2)}</div>
                     
                     <div class="phone-meta">
-                        <div>Kirim: $${phone.purchasePrice.toFixed(2)}</div>
+                        <div>Investitsiya: $${phone.purchasePrice.toFixed(2)}</div>
                         <div style="color: ${profit >= 0 ? '#10b981' : '#ef4444'}">
-                            ${profitText}
+                            ${profitText} (${roi}%)
                         </div>
                     </div>
                     
@@ -1686,7 +1847,7 @@
                             <i class="fas fa-edit"></i> Tahrirlash
                         </button>
                         <button class="btn btn-secondary btn-small" onclick="deletePhone(${phone.id})" style="background: rgba(239, 68, 68, 0.2); color: #ef4444;">
-                            <i class="fas fa-trash"></i> O'chirish
+                            <i class="fas fa-trash"></i> O\'chirish
                         </button>
                     </div>
                 `;
@@ -1719,6 +1880,8 @@
             
             filteredSales.forEach((sale, index) => {
                 const profit = sale.salePrice - sale.purchasePrice;
+                const profitPercentage = sale.purchasePrice > 0 ? ((profit / sale.purchasePrice) * 100).toFixed(1) : '0';
+                
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${index + 1}</td>
@@ -1728,7 +1891,7 @@
                     <td>$${sale.purchasePrice.toFixed(2)}</td>
                     <td><strong>$${sale.salePrice.toFixed(2)}</strong></td>
                     <td class="profit-cell ${profit >= 0 ? 'profit-positive' : 'profit-negative'}">
-                        ${profit >= 0 ? '+' : ''}$${profit.toFixed(2)}
+                        ${profit >= 0 ? '+' : ''}$${profit.toFixed(2)} (${profitPercentage}%)
                     </td>
                 `;
                 salesTable.appendChild(row);
@@ -1740,7 +1903,9 @@
             const userPhones = phones.filter(p => p.addedBy === currentUser.name);
             const totalPhones = userPhones.length;
             const soldPhones = userPhones.filter(p => p.status === 'sold').length;
-            const availablePhones = totalPhones - soldPhones;
+            
+            // Calculate total investment
+            const totalInvestment = userPhones.reduce((sum, phone) => sum + phone.purchasePrice, 0);
             
             // Calculate total profit (only from sold phones)
             const totalProfit = userPhones
@@ -1750,7 +1915,7 @@
             // Update UI
             totalPhonesEl.textContent = totalPhones;
             soldPhonesEl.textContent = soldPhones;
-            availablePhonesEl.textContent = availablePhones;
+            totalInvestmentEl.textContent = `$${totalInvestment.toFixed(2)}`;
             totalProfitEl.textContent = `$${totalProfit.toFixed(2)}`;
             totalProfitEl.style.color = totalProfit >= 0 ? '#10b981' : '#ef4444';
             
@@ -1758,6 +1923,126 @@
             totalCountEl.textContent = totalPhones;
             soldCountEl.textContent = soldPhones;
             profitCountEl.textContent = `$${totalProfit.toFixed(2)}`;
+        }
+        
+        // UPDATE REPORTS
+        function updateReports() {
+            const today = new Date().toDateString();
+            const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+            const monthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+            
+            // Filter today's sales
+            const todaySales = sales.filter(sale => {
+                const saleDate = new Date(sale.saleDate).toDateString();
+                return saleDate === today;
+            });
+            
+            // Calculate today's profit
+            const todayProfit = todaySales.reduce((sum, sale) => sum + sale.profit, 0);
+            
+            // Filter weekly sales
+            const weekSales = sales.filter(sale => {
+                const saleDate = new Date(sale.saleDate);
+                return saleDate >= weekAgo;
+            });
+            
+            // Calculate weekly profit
+            const weekProfit = weekSales.reduce((sum, sale) => sum + sale.profit, 0);
+            
+            // Filter monthly sales
+            const monthSales = sales.filter(sale => {
+                const saleDate = new Date(sale.saleDate);
+                return saleDate >= monthAgo;
+            });
+            
+            // Calculate monthly profit
+            const monthProfit = monthSales.reduce((sum, sale) => sum + sale.profit, 0);
+            
+            // User's phones
+            const userPhones = phones.filter(p => p.addedBy === currentUser.name);
+            const totalInvestment = userPhones.reduce((sum, phone) => sum + phone.purchasePrice, 0);
+            const totalRevenue = userPhones
+                .filter(p => p.status === 'sold')
+                .reduce((sum, phone) => sum + phone.salePrice, 0);
+            const totalProfit = userPhones
+                .filter(p => p.status === 'sold')
+                .reduce((sum, phone) => sum + (phone.salePrice - phone.purchasePrice), 0);
+            
+            // Calculate averages
+            const avgProfitPerPhone = sales.length > 0 ? totalProfit / sales.length : 0;
+            const roiPercentage = totalInvestment > 0 ? ((totalProfit / totalInvestment) * 100) : 0;
+            const profitMargin = totalRevenue > 0 ? ((totalProfit / totalRevenue) * 100) : 0;
+            
+            // Count available and sold phones
+            const availablePhones = userPhones.filter(p => p.status === 'available').length;
+            const soldPhones = userPhones.filter(p => p.status === 'sold').length;
+            
+            // Find max and min profit phone
+            const profits = sales.map(sale => sale.profit);
+            const maxProfitPhone = profits.length > 0 ? Math.max(...profits) : 0;
+            const minProfitPhone = profits.length > 0 ? Math.min(...profits) : 0;
+            
+            // Get top models
+            const modelCounts = {};
+            sales.forEach(sale => {
+                modelCounts[sale.model] = (modelCounts[sale.model] || 0) + 1;
+            });
+            
+            const topModels = Object.entries(modelCounts)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5);
+            
+            // Update UI
+            todaySalesEl.textContent = todaySales.length;
+            todayProfitEl.textContent = `$${todayProfit.toFixed(2)}`;
+            todayProfitEl.style.color = todayProfit >= 0 ? '#10b981' : '#ef4444';
+            
+            weekSalesEl.textContent = weekSales.length;
+            weekProfitEl.textContent = `$${weekProfit.toFixed(2)}`;
+            weekProfitEl.style.color = weekProfit >= 0 ? '#10b981' : '#ef4444';
+            
+            monthSalesEl.textContent = monthSales.length;
+            monthProfitEl.textContent = `$${monthProfit.toFixed(2)}`;
+            monthProfitEl.style.color = monthProfit >= 0 ? '#10b981' : '#ef4444';
+            
+            avgProfitPerPhoneEl.textContent = `$${avgProfitPerPhone.toFixed(2)}`;
+            avgProfitPerPhoneEl.style.color = avgProfitPerPhone >= 0 ? '#10b981' : '#ef4444';
+            
+            roiPercentageEl.textContent = `${roiPercentage.toFixed(1)}%`;
+            roiPercentageEl.style.color = roiPercentage >= 0 ? '#10b981' : '#ef4444';
+            
+            totalInvestmentReportEl.textContent = `$${totalInvestment.toFixed(2)}`;
+            totalRevenueEl.textContent = `$${totalRevenue.toFixed(2)}`;
+            totalProfitReportEl.textContent = `$${totalProfit.toFixed(2)}`;
+            totalProfitReportEl.style.color = totalProfit >= 0 ? '#10b981' : '#ef4444';
+            
+            profitMarginEl.textContent = `${profitMargin.toFixed(1)}%`;
+            profitMarginEl.style.color = profitMargin >= 0 ? '#10b981' : '#ef4444';
+            
+            availablePhonesReportEl.textContent = availablePhones;
+            soldPhonesReportEl.textContent = soldPhones;
+            maxProfitPhoneEl.textContent = `$${maxProfitPhone.toFixed(2)}`;
+            minProfitPhoneEl.textContent = `$${minProfitPhone.toFixed(2)}`;
+            
+            // Render top models
+            topModelsEl.innerHTML = '';
+            if (topModels.length > 0) {
+                topModels.forEach(([model, count], index) => {
+                    const modelEl = document.createElement('div');
+                    modelEl.style.display = 'flex';
+                    modelEl.style.justifyContent = 'space-between';
+                    modelEl.style.padding = '10px 0';
+                    modelEl.style.borderBottom = index < topModels.length - 1 ? '1px solid rgba(255, 255, 255, 0.1)' : 'none';
+                    
+                    modelEl.innerHTML = `
+                        <div>${index + 1}. ${escapeHtml(model)}</div>
+                        <div><strong>${count} dona</strong></div>
+                    `;
+                    topModelsEl.appendChild(modelEl);
+                });
+            } else {
+                topModelsEl.innerHTML = '<p style="color: var(--gray); text-align: center;">Hozircha sotuvlar mavjud emas</p>';
+            }
         }
         
         // TOGGLE PHONE STATUS
@@ -1803,6 +2088,7 @@
             saveToLocalStorage();
             renderPhones();
             updateStats();
+            updateReports();
             
             showNotification(`Telefon ${newStatus === 'sold' ? 'sotildi' : 'omborga qaytarildi'}`, 'success');
         }
@@ -1890,6 +2176,7 @@
             renderPhones();
             renderSales();
             updateStats();
+            updateReports();
             
             editModal.style.display = 'none';
             editPhoneId = null;
@@ -1912,6 +2199,7 @@
             renderPhones();
             renderSales();
             updateStats();
+            updateReports();
             
             showNotification('Telefon o\'chirildi', 'success');
         }
